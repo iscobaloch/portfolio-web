@@ -1,18 +1,18 @@
-DockerfileCopy code# Base image
+# Base Image
 FROM python:3.9-slim
 
-# Working directory
+# Work directory
 WORKDIR /app
 
-# Copy requirements file and install dependencies
+# Copy requirements and install dependencies
 COPY requirements.txt requirements.txt
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install -r requirements.txt
 
-# Copy the rest of the project files
+# Copy other project files
 COPY . .
 
-# Expose the server port
+# Expose a port to Containers 
 EXPOSE 8080
 
-# Command to start the server
-CMD ["waitress-serve", "--host=0.0.0.0", "--port=8080", "app:app"]
+# Command to run on server
+CMD ["gunicorn", "-b", "0.0.0.0:8080", "app:app"]
